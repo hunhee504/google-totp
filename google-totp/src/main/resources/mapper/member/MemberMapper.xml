@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.googletotp.biz.member.MemberMapper">
+    <resultMap id="memberMap" type="com.demo.googletotp.biz.member.Member">
+        <result property="mbrIdx" column="MBR_IDX" />
+        <result property="loginId" column="LOGIN_ID" />
+        <result property="loginPw" column="LOGIN_PW" />
+        <result property="secretKey" column="SECRET_KEY" />
+    </resultMap>
+
+    <select id="getMbrInfoById" resultMap="memberMap">
+        SELECT MI.MBR_IDX
+             , MI.LOGIN_ID
+             , MI.LOGIN_PW
+             , MI.SECRET_KEY
+          FROM MBR_INFO MI
+         WHERE MI.LOGIN_ID = #{loginId, jdbcType=VARCHAR}
+           AND MI.LOGIN_PW = IFNULL(#{loginPw, jdbcType=VARCHAR}, MI.LOGIN_PW)
+    </select>
+
+    <insert id="insertMbrInfo">
+        INSERT INTO MBR_INFO (
+              LOGIN_ID
+            , LOGIN_PW
+            , SECRET_KEY
+            , RGST_DTM
+            , MOD_DTM
+        ) VALUES (
+              #{loginId}
+            , #{loginPw}
+            , #{secretKey}
+            , NOW()
+            , NOW()
+        )
+    </insert>
+</mapper>

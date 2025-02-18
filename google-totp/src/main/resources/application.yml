@@ -1,0 +1,27 @@
+#spring.application.name=google-totp
+#spring.mvc.view.prefix=/WEB-INF/views/
+#spring.mvc.view.suffix=.jsp
+#spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+#spring.datasource.url=jdbc:mysql://localhost:3306/GOOGLEOTP?serverTimezone=UTC
+#spring.datasource.username=root
+#spring.datasource.password=1q2w3e4r!
+#
+#mybatis.mapper-locations=classpath:mapper/*.xml
+
+
+spring:
+  mvc:
+    static-path-pattern: /resources/**
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/GOOGLEOTP?serverTimezone=UTC
+    username: root
+    password: 1q2w3e4r!
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+server:
+  port: 9090
