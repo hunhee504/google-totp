@@ -29,29 +29,6 @@ public class GoogleAuthController {
         return new ModelAndView("googleauth/google-otp-rgst");
     }
 
-    @GetMapping("/root-chk")
-    @ResponseBody
-    public Map<String, Object> rootChk(Member member) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        Boolean rootFlag = false;
-
-       Member info = memberService.getMbrInfoById(member);
-
-        if(!Objects.isNull(info) && StringUtils.equals("root", member.getLoginId())) {
-            rootFlag = true;
-        }
-//        String rootId = "root";
-//        String rootPw = "1234";
-
-//        if(StringUtils.equals(rootId, user.getLoginId()) && StringUtils.equals(rootPw, user.getLoginPw())) {
-//            rootFlag = true;
-//        }
-
-        map.put("rootFlag", rootFlag);
-
-        return map;
-    }
-
     @GetMapping("/google-auth-rgst-info")
     @ResponseBody
     public Map<String, Object> getGoogleRgstInfo(Member member) {

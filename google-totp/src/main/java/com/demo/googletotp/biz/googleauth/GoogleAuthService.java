@@ -16,8 +16,10 @@ import java.security.SecureRandom;
 @Service
 public class GoogleAuthService {
 
-
-    // 최초 개인키 생성
+    /**
+     * @Desc: 개인키 생성
+     * @return
+     */
     public String getGoogleSecretKey() {
         SecureRandom rndm = new SecureRandom();
 
@@ -29,7 +31,10 @@ public class GoogleAuthService {
         return base32.encodeToString(bytes);
     }
 
-    // OTP검증 요청시 개인키로 OTP 생성
+    /**
+     * @Desc: 개인키로 OTP 코드 생성
+     * @return
+     */
     public String getTOTPCode(String secretKey) {
         Base32 base = new Base32();
         byte[] bytes = base.decode(secretKey);
@@ -37,7 +42,10 @@ public class GoogleAuthService {
         return TOTP.getOTP(Hex.encodeHexString(bytes));
     }
 
-    // 구글 OTP 인증용 링크 생성
+    /**
+     * @Desc: 구글 OTP 인증용 링크 생성
+     * @return
+     */
     public String getGoogleAuthBarcode(String secretKey, String issuer, String userName) throws Exception {
         return    "otpauth://totp/"
                 + URLEncoder.encode(issuer + ":" + userName, "UTF-8").replace("+", "%20")
@@ -45,7 +53,10 @@ public class GoogleAuthService {
                 + "&issuer=" + URLEncoder.encode(issuer, "UTF-8").replace("+", "%20");
     }
 
-    // QR코드 이미지 생성
+    /**
+     * @Desc: QR코드 이미지 생성
+     * @return
+     */
     public byte[] getQRCodeImg(String url, int width, int height) throws Exception {
         BitMatrix matrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height);
         ByteArrayOutputStream bos = new ByteArrayOutputStream();

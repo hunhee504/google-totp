@@ -32,50 +32,12 @@ public class MemberController {
     @PostMapping("/login")
     @ResponseBody
     public Map<String, Object> memberLogin(Member member) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        boolean loginFlag = false;
-        Member info = memberService.getMbrInfoById(member);
-        System.out.println(info);
-
-        if(Objects.isNull(info)) {
-            map.put("loginFlag", loginFlag);
-            map.put("resultMsg", "ID,PW 일치하지않습니다.");
-            return map;
-        }
-
-        String otpCode = googleAuthService.getTOTPCode(info.getSecretKey());
-        String resultMsg = "";
-
-        if(StringUtils.equals(member.getOtpCode(), otpCode)) {
-            loginFlag = true;
-            resultMsg = "로그인성공";
-        } else {
-            resultMsg = "OTP 코드 다름";
-        }
-
-        map.put("loginFlag", loginFlag);
-        map.put("resultMsg", resultMsg);
-        return map;
+        return memberService.memberLogin(member);
     }
 
     @PostMapping("/join")
     @ResponseBody
-    public Map<String, Object> mbrJoin(Member member) {
-        Map<String, Object> map = new HashMap<String, Object>();
-        Member info = memberService.getMbrInfoById(member);
-
-        if(Objects.isNull(info)) {
-            // 회원가입
-            int cnt = memberService.insertMbrInfo(member);
-            if(cnt > 0) {
-                map.put("resultCode", "success");
-            } else {
-                map.put("resultCode", "fail");
-            }
-        } else {
-            map.put("resultCode", "duplication");
-        }
-
-        return map;
+    public Map<String, Object> memberJoin(Member member) {
+        return memberService.memberJoin(member);
     }
 }
